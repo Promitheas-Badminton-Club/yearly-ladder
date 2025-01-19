@@ -1,0 +1,51 @@
+name: Regenerate Ranking Page
+
+on:
+  push:
+    branches:
+      - master
+  schedule:
+    # Run every night at midnight (UTC)
+    - cron: "0 0 * * *"
+
+jobs:
+  regenerate-ranking:
+    runs-on: ubuntu-latest
+
+    permissions:
+      contents: write  # Ensures the GitHub Actions bot has write access to the repository
+
+    steps:
+      # Checkout the repository
+      - name: Checkout repository
+        uses: actions/checkout@v4
+
+      # Set up Node.js
+      - name: Set up Node.js
+        uses: actions/setup-node@v4
+        with:
+          check-latest: true
+
+      # Cache Node.js modules and build cache (optional but recommended for speed)
+      - name: Cache Node.js modules
+        uses: actions/cache@v3
+        with:
+          path: node_modules
+          key: ${{ runner.os }}-node-${{ hashFiles('package-lock.json') }}
+          restore-keys: |
+            ${{ runner.os }}-node-
+
+      # Install dependencies
+      - name: Install dependencies
+        run: npm ci
+
+      # Run the script to regenerate the ranking page
+      - name: Generate ranking page
+        run: node index.mjs
+
+      # Deploy to GitHub Pages
+      - name: Deploy to GitHub Pages
+        uses: peaceiris/actions-gh-pages@v4
+        with:
+          github_token: ${{ secrets.GITHUB_TOKEN }}
+          publish_dir: ./public
