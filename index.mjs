@@ -105,6 +105,9 @@ const template = `
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>Promitheas Yearly Ladder</title>
   <style>
+    html {
+      scroll-behavior: smooth;
+    }
     body {
       font-family: "Courier New", Courier, monospace;
       margin: 0;
@@ -132,6 +135,9 @@ const template = `
     }
     li {
       margin: 0.5rem 0;
+    }
+    h1 {
+      margin-top: 20vh;
     }
     h2 {
       margin: 2rem 0 0.5rem;
