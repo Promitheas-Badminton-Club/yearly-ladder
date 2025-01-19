@@ -114,13 +114,17 @@ const template = `
       line-height: 1.6;
     }
     header, footer {
-      padding: 1rem;
+      padding-right: 4vw;
+      padding-left: 4vw;
+      padding-top: 4vw;
+      padding-bottom: 4vw;
     }
     header h1, footer p {
       margin: 0;
     }
     main {
-      padding: 2rem;
+      padding-right: 4vw;
+      padding-left: 4vw;
     }
     ol {
       list-style-type: decimal;
@@ -150,13 +154,13 @@ const template = `
     <body>
       <header>
         <h1>Promitheas ${new Date().getFullYear()} Yearly Ladder</h1>
-      </header>
-      <main>
         <nav>
           <a href="#Ranking">Ranking</a>
           <a href="#Rules">Rules</a>
           <a href="#Play">Play</a>
         </nav>
+      </header>
+      <main>
         <h1 id="Ranking">Ranking</h1>
         <ol>
           {{#ladder}}
