@@ -140,9 +140,13 @@ const template = `
       margin-top: 20vh;
     }
     h2 {
+      margin-top: 20vh;
+      opacity: 0.5;
+    }
+    h3 {
+      opacity: 0.3;
       margin: 2rem 0 0.5rem;
           font-size: 1.5rem;
-          border-bottom: 2px solid #dee2e6;
           padding-bottom: 0.5rem;
         }
         .medal {
@@ -167,11 +171,11 @@ const template = `
         </nav>
       </header>
       <main>
-        <h1 id="Ranking">Ranking</h1>
+        <h2 id="Ranking">Ranking</h2>
         <ol>
           {{#ladder}}
           {{#addHr}}
-            <h2>Level {{level}}</h2>
+            <h3>Level {{level}}</h3>
           {{/addHr}}
           <li>
             {{name}}
@@ -182,7 +186,7 @@ const template = `
           {{/ladder}}
         </ol>
 
-        <h1 id="Rules">Rules</h1>
+        <h2 id="Rules">Rules</h2>
 
     <ol>
       <li>
@@ -216,7 +220,7 @@ const template = `
       </li>
     </ol>
 
-    <h1 id="Play">Play</h1>
+    <h2 id="Play">Play</h2>
     <ol>
       <li>
         Join the WhatsApp chat group and start challenging players.
