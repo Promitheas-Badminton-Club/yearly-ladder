@@ -1,14 +1,14 @@
 import fs from "fs";
 import Mustache from "mustache";
-import { parse } from 'csv-parse/sync';
+import { parse } from "csv-parse/sync";
 
 const googleSheetPublicCSVUrl = (url) => {
-  const { groups: { gid, sheetId } } = /\/d\/(?<sheetId>(\w|-)+)\/.+gid=(?<gid>\d+)/
-    .exec(url);
+  const { groups: { gid, sheetId } } =
+    /\/d\/(?<sheetId>(\w|-)+)\/.+gid=(?<gid>\d+)/
+      .exec(url);
 
   return `https://docs.google.com/spreadsheets/d/${sheetId}/export?format=csv&gid=${gid}`;
 };
-
 
 async function fetchGoogleSheetData(url) {
   const res = await fetch(googleSheetPublicCSVUrl(url));
@@ -20,53 +20,57 @@ async function fetchGoogleSheetData(url) {
   const csvText = await res.text();
   const records = parse(csvText, {
     columns: true,
-    skip_empty_lines: true
+    skip_empty_lines: true,
   });
 
   return records;
 }
 
-const url = 'https://docs.google.com/spreadsheets/d/1CI0aGjYIyPN0ExFJhUMFB3WaE2yV3UvnS6HKVt0Ti00/edit?resourcekey=&gid=131035744#gid=131035744'
+const url =
+  "https://docs.google.com/spreadsheets/d/1CI0aGjYIyPN0ExFJhUMFB3WaE2yV3UvnS6HKVt0Ti00/edit?resourcekey=&gid=131035744#gid=131035744";
 const csvData = await fetchGoogleSheetData(url);
 
+console.log(csvData);
+
 // Reduce function to process the ladder
+
 const ladderSystem = csvData.reduce((ladder, record) => {
-  const {
-    Challenger: challenger,
-    Challenged: challenged,
-    Results: result,
-  } = record
-  
+  const { Challenger: challenger, Challenged: challenged, Results: result } =
+    record;
 
-    // Ensure both players are on the ladder
-    if (!ladder.includes(challenger)) ladder.push(challenger);
-    if (!ladder.includes(challenged)) ladder.push(challenged);
+  // Ensure both players are on the ladder
+  if (!ladder.includes(challenger)) ladder.push(challenger);
+  if (!ladder.includes(challenged)) ladder.push(challenged);
 
-    const challengerIndex = ladder.indexOf(challenger);
-    const challengedIndex = ladder.indexOf(challenged);
+  console.log(ladder, record);
 
-    // Validate challenge within 3 ranks
-    if (
-      challengedIndex !== -1 &&
-      challengerIndex !== -1
-    ) {
-      // Parse game results and determine the match winner
-      const scores = result.split(" ").map(game => game.split("-").map(Number));
-      const wins = { [challenger]: 0, [challenged]: 0 };
+  const challengerIndex = ladder.indexOf(challenger);
+  const challengedIndex = ladder.indexOf(challenged);
 
-      scores.forEach(([challengerScore, challengedScore]) => {
-        if (challengerScore > challengedScore) wins[challenger]++;
-        else wins[challenged]++;
-      });
+  // Parse game results and determine the match winner
+  const scores = result.split(" ").map((game) => game.split("-").map(Number));
+  let challengerWins = 0;
+  let challengedWins = 0;
 
-      if (wins[challenger] >= 2) {
-        // Challenger wins: Swap positions
-        ladder.splice(challengedIndex, 1); // Remove challenged
-        ladder.splice(challengerIndex, 1); // Remove challenger
-        ladder.splice(challengedIndex - 1, 0, challenger); // Insert challenger at challenged's position
-        ladder.splice(challengedIndex, 0, challenged); // Insert challenged at new position
-      }
+  scores.forEach(([challengerScore, challengedScore]) => {
+    if (challengerScore > challengedScore) challengerWins++;
+    else challengedWins++;
+  });
+
+  console.log("challengerWins", challengerWins);
+  console.log("challengedWins", challengedWins);
+
+  if (challengerWins >= 2) {
+    // Only swap of challenger has lower rank than challenged.
+    if (challengedIndex < challengerIndex) {
+      // Remove the challenger from its old spot
+      ladder.splice(challengerIndex, 1);
+
+      // Place challenger on challenged spot
+      ladder.splice(challengedIndex, 0, challenger);
     }
+  }
+
   return ladder;
 }, []);
 
@@ -92,7 +96,6 @@ const ladderData = {
     };
   }),
 };
-
 
 const template = `
 <!DOCTYPE html>
