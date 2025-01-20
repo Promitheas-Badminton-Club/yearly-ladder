@@ -144,8 +144,7 @@ const template = `
       margin: 0.5rem 0;
     }
     h1 {
-      padding-top: 4vh;
-      margin-top: calc(20vh - 4vh);
+      margin-top: 4vw;
     }
     h2 {
       margin-top: 20vh;
