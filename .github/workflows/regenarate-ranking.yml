@@ -41,7 +41,7 @@ jobs:
 
       # Run the script to regenerate the ranking page
       - name: Generate ranking page
-        run: node index.mjs
+        run: NODE_ENV=production node index.mjs
 
       # Deploy to GitHub Pages
       - name: Deploy to GitHub Pages

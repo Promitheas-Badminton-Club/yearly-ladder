@@ -2,6 +2,9 @@ import fs from "fs";
 import Mustache from "mustache";
 import { parse } from "csv-parse/sync";
 import * as badminton from './badminton.mjs'
+import Debug from 'debug'
+
+const debug = Debug('yearly-ladder')
 
 const googleSheetPublicCSVUrl = (url) => {
   const { groups: { gid, sheetId } } =
@@ -31,9 +34,7 @@ const url =
   "https://docs.google.com/spreadsheets/d/1CI0aGjYIyPN0ExFJhUMFB3WaE2yV3UvnS6HKVt0Ti00/edit?resourcekey=&gid=131035744#gid=131035744";
 const csvData = await fetchGoogleSheetData(url);
 
-console.log(csvData);
-
-
+debug(csvData)
 
 // Reduce function to process the ladder
 
@@ -44,8 +45,6 @@ const ladderSystem = csvData.reduce((ladder, record) => {
   // Ensure both players are on the ladder
   if (!ladder.includes(challenger)) ladder.push(challenger);
   if (!ladder.includes(challenged)) ladder.push(challenged);
-
-  console.log(ladder, record);
 
   const challengerIndex = ladder.indexOf(challenger);
   const challengedIndex = ladder.indexOf(challenged);
@@ -99,6 +98,8 @@ const ladderData = {
     };
   }),
 };
+
+debug(ladderSystem)
 
 const template = `
 <!DOCTYPE html>
@@ -264,4 +265,4 @@ const template = `
 // Generate and save the HTML file
 const renderedMarkup = Mustache.render(template, ladderData);
 fs.writeFileSync("public/index.html", renderedMarkup);
-console.info("Ranking page regenerated!");
+debug("Ranking page regenerated!");

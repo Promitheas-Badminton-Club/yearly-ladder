@@ -11,6 +11,7 @@
   "description": "",
   "dependencies": {
     "csv-parse": "^5.6.0",
+    "debug": "^4.4.0",
     "mustache": "^4.2.0"
   },
   "devDependencies": {
