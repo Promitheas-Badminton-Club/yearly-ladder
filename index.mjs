@@ -236,6 +236,13 @@ const template = `
         </a>
       </li>
 
+      <li>
+        View all your matches and their results on
+        <a href="https://docs.google.com/spreadsheets/d/1CI0aGjYIyPN0ExFJhUMFB3WaE2yV3UvnS6HKVt0Ti00/edit?resourcekey=&gid=131035744#gid=131035744">
+          Google sheets
+        </a>
+      </li>
+
     </ol>
 
   </main>
