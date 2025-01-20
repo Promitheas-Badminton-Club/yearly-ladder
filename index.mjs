@@ -116,6 +116,9 @@ const template = `
       color: #212529;
       line-height: 1.6;
     }
+    footer {
+      margin-top: 20vh;
+    }
     header, footer {
       padding-right: 4vw;
       padding-left: 4vw;
