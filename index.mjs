@@ -192,6 +192,10 @@ const template = `
             {{#isThird}}<span class="medal">🥉</span>{{/isThird}}
           </li>
           {{/ladder}}
+
+          {{^ladder}}
+            <p>No ladder entries available.</p>
+          {{/ladder}}
         </ol>
 
         <h2 id="Rules">Rules</h2>
