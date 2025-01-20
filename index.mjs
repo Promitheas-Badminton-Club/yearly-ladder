@@ -140,7 +140,8 @@ const template = `
       margin: 0.5rem 0;
     }
     h1 {
-      margin-top: 20vh;
+      padding-top: 4vh;
+      margin-top: calc(20vh - 4vh);
     }
     h2 {
       margin-top: 20vh;
