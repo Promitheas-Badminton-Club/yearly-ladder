@@ -234,16 +234,15 @@ const template = `
     <h2 id="Play">Play</h2>
     <ol>
       <li>
-        Join the WhatsApp chat group and start challenging players.
         <a href="https://chat.whatsapp.com/CIl4T9qvd4Q1BiYNMVQXp8" target="_blank">
-          Promitheas Yearly Ladder WhatsApp Group
-        </a>
+          Join the WhatsApp chat group
+        </a> and start challenging players.
       </li>
 
       <li>
-        Register a match result.
+        Submit a match result using 
         <a href="https://forms.gle/6x2Eygpfm2owNoZf6" target="_blank">
-          Result Form
+          the results form.
         </a>
       </li>
 
