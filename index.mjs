@@ -1,6 +1,7 @@
 import fs from "fs";
 import Mustache from "mustache";
 import { parse } from "csv-parse/sync";
+import * as badminton from './badminton.mjs'
 
 const googleSheetPublicCSVUrl = (url) => {
   const { groups: { gid, sheetId } } =
@@ -32,6 +33,8 @@ const csvData = await fetchGoogleSheetData(url);
 
 console.log(csvData);
 
+
+
 // Reduce function to process the ladder
 
 const ladderSystem = csvData.reduce((ladder, record) => {
@@ -48,7 +51,7 @@ const ladderSystem = csvData.reduce((ladder, record) => {
   const challengedIndex = ladder.indexOf(challenged);
 
   // Parse game results and determine the match winner
-  const scores = result.split(" ").map((game) => game.split("-").map(Number));
+  const scores = badminton.parseScore(result);
   let challengerWins = 0;
   let challengedWins = 0;
 
